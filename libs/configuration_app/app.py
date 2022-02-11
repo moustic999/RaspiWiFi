@@ -97,12 +97,14 @@ def scan_wifi_networks():
             ap_ssid = line[27:-1]
             if ap_ssid != '':
                 ap_array.append(ap_ssid)
-
+    
+    ap_array = list(dict.fromkeys(ap_array))
     return ap_array
 
 def create_wpa_supplicant(ssid, wifi_key):
     temp_conf_file = open('wpa_supplicant.conf.tmp', 'w')
 
+    temp_conf_file.write('country=be\n')
     temp_conf_file.write('ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n')
     temp_conf_file.write('update_config=1\n')
     temp_conf_file.write('\n')
